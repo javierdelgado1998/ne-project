@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, createContext, useState } from "react";
+import Container from "./components/Container";
+import Section from "./components/Section";
+import LoginForm from "./components/login/LoginForm";
 
-function App() {
+const Context = createContext({});
+
+const LoginProvider = ({children}) => {
+  const [logged, setLogged] = useState(false);
+  const value = {
+    logged,
+    login: () => setLogged(true),
+    logout: () => setLogged(false),
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Context.Provider value={value}>
+      {children}
+    </Context.Provider>
+  )
 }
+
+const App = () => {
+  const {logged} = useContext(Context);
+  if(logged) { 
+      return (
+        <LoginProvider>
+          <div>HOME</div>
+        </LoginProvider>
+      )
+  }
+  return (
+    <LoginProvider>
+      <Container>
+        <Section>
+          <LoginForm />
+        </Section>
+      </Container>
+    </LoginProvider>
+  )
+};
 
 export default App;
