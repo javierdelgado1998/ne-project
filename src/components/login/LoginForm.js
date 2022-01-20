@@ -2,21 +2,29 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import Input from "./Input";
 import Button from "./Button";
+import { useContext } from "react/cjs/react.development";
+import UserContext from "../../context/user/UserContext";
 
 const LoginForm = () => {
+    const {login, setUser} = useContext(UserContext);
     const handleSubmit = async (values) => {
-        const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/login", {
+        setUser({
+            name: "Javier",
+            lastname: "Delgado",
+            email: "javi98delgado@gmail.com"
+        })
+        login();
+/*         const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(values),
         });
-        console.log(response);
         if(response.ok && response.status === 200) {
             const data = await response.json();
             console.log(data);
-        }
+        } */
     }
     return (
         <Formik
