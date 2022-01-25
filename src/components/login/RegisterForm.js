@@ -8,7 +8,7 @@ import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { BsCardImage } from "react-icons/bs";
 import Icon from "../../styles/icons/Icon";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 
 const RegisterForm = ({closeModal}) => {
     const ref = useRef();
@@ -19,7 +19,7 @@ const RegisterForm = ({closeModal}) => {
         password: "",
         img: ""
     };
-    const handleSubmit = async (values) => {
+    const handleSubmit = useCallback(async (values) => {
         const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/register", {
             method: "POST",
             headers: {
@@ -28,27 +28,25 @@ const RegisterForm = ({closeModal}) => {
             body: JSON.stringify(values),
         });
         if(response.ok && response.status === 200) {
-            const data = await response.json();
+            console.log(response);
             ref.current.textContent = "Registro exitoso..."
             ref.current.style.color = "green";
-            console.log(data);
+            return true;
         }
         else {
-            console.log(response);
             ref.current.textContent = "Se ha producido un problema con tu solicitud...";
             ref.current.style.color = "red";
-            console.log(ref.current);
+            return false;
         }
-    }
+    }, []);
+
     return (
         <Formik
             initialValues={initialValues} 
-            onSubmit={(values, {resetForm}) => {
-                    console.log(values);
-                    handleSubmit();
-                    resetForm();
-                }
-            }
+            onSubmit={async (values, {resetForm}) => {
+                console.log(values);
+                handleSubmit().then(response => response && resetForm());
+            }}
             validationSchema={Yup.object({
                 firstname: Yup.string().min(3, "Mínimo 3 caracteres").max(20, "Máximo 20 caracteres").required('Obligatorio'),
                 lastname: Yup.string().min(3, "Mínimo 3 caracteres").max(20, "Máximo 20 caracteres").required('Obligatorio'),

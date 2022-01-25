@@ -3,15 +3,27 @@ import { useField } from "formik";
 import Section from "../Section";
 import { useEffect, useRef } from "react";
 import {RiAlertFill} from "react-icons/ri";
+import {BsFillCheckCircleFill} from "react-icons/bs";
 
-const style = {
-    icon: {
-        marginLeft: "5px",
-        color: "red",
-        height: "25px",
-        width: "25px",
-    }
-}
+const WarningIcon = styled(RiAlertFill)`
+    color: red;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    opacity: 0.6;
+`;
+
+const CheckIcon = styled(BsFillCheckCircleFill)`
+    color: green;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    opacity: 0.6;
+`;
 
 const Control = styled.div`
     margin-bottom: 20px;
@@ -22,6 +34,11 @@ const Label = styled.label`
     color: #000;
     display: block;
     margin-bottom: 5px;
+`;
+
+const GroupInput = styled.div`
+    position: relative;
+    width: 100%;
 `;
 
 const MyInput = styled.input`
@@ -54,8 +71,11 @@ const Input = ({label, children, ...props}) => {
             <Section padding="0" boxShadow="none" width="100%" display="flex" alignItems="flex-start" direction="column">
                 <Section padding="0" boxShadow="none" width="100%" display="flex" alignItems="center">
                     {children}
-                    <MyInput ref={ref} focusColor={meta.touched && meta.error ? "#f00" : "#61ccff"} {...field} {...props} />
-                    {meta.touched && meta.error ? (<RiAlertFill style={style.icon} />) : null}
+                    <GroupInput>
+                        <MyInput ref={ref} focusColor={meta.touched && meta.error ? "#f00" : "#61ccff"} {...field} {...props} />
+                        {meta.touched && !meta.error ? (<CheckIcon />) : null}
+                        {meta.touched && meta.error ? (<WarningIcon />) : null}
+                    </GroupInput>
                 </Section>
                 {meta.touched && meta.error ? (<ErrorMessage>{meta.error}</ErrorMessage>) : null}
             </Section>

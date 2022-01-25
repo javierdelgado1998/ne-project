@@ -24,7 +24,8 @@ const LoginForm = () => {
             setUser(data.data);
             login();
         }
-    }
+    };
+
     return (
         <Formik
             initialValues={{ email: '', password: ''}} 

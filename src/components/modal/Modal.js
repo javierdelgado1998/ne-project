@@ -8,6 +8,7 @@ const style = {
     width: "25px",
   }
 }
+
 const Modal = ({ isOpen, closeModal, children}) => {
   return (
     <div className={`modal-overlay ${isOpen && "modal-open"}`}>
