@@ -1,5 +1,5 @@
 .modal-overlay {
-    background-color: rgba(0,0,0 .05);
+    background-color: rgba(0,0,0,0.5);
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -12,10 +12,8 @@
 }
 
 .modal-container {
-    background-color: silver;
-    padding: 10px;
+    background-color: #fff;
     width: 50%;
-    height: 90%;
 }
 
 .modal-open {
@@ -30,22 +28,21 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 20px;
     width: 100%;
     margin-bottom: 10px;
+    background: #fafafa;
+}
+
+.modal-main {
+    padding: 20px;
 }
 
 .modal-header .modal-button-close {
     border: none;
     background-color: transparent;
-    height: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: auto;
     cursor: pointer;
-}
-
-.modal-header .modal-button-close span {
-    color: #fff;
 }

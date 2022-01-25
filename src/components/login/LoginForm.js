@@ -4,17 +4,15 @@ import Input from "./Input";
 import Button from "./Button";
 import { useContext } from "react/cjs/react.development";
 import UserContext from "../../context/user/UserContext";
+import Section from "../Section";
+import {MdEmail} from "react-icons/md"
+import {RiLockPasswordFill} from "react-icons/ri";
+import Icon from "../../styles/icons/Icon";
 
 const LoginForm = () => {
     const {login, setUser} = useContext(UserContext);
     const handleSubmit = async (values) => {
-        setUser({
-            name: "Javier",
-            lastname: "Delgado",
-            email: "javi98delgado@gmail.com"
-        })
-        login();
-/*         const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/login", {
+        const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -23,8 +21,9 @@ const LoginForm = () => {
         });
         if(response.ok && response.status === 200) {
             const data = await response.json();
-            console.log(data);
-        } */
+            setUser(data.data);
+            login();
+        }
     }
     return (
         <Formik
@@ -36,9 +35,26 @@ const LoginForm = () => {
             })}
         >
             <Form>
-                <Input name="email" label="Email" type="email" />
-                <Input name="password" type="password" label="Contraseña" />
-                <Button type="submit">Iniciar sesión</Button>
+                <Input name="email" placeholder="Ingrese su correo electrónico..." label="Email" type="email" >
+                    <MdEmail style={Icon} />
+                </Input>
+                <Input name="password" placeholder="Ingrese su contraseña..." type="password" label="Contraseña" >
+                    <RiLockPasswordFill style={Icon} />
+                </Input>
+                <Section display="flex" justifyContent="center" alignItems ="center" width="100%" boxShadow="none">
+                    <Button
+                        type="submit" 
+                        background="#0081B7" 
+                        color="#fff" 
+                        border="2px solid #00b0ea" 
+                        width="100%" 
+                        fontSize="20px"
+                        hoverBackground="#225380"
+                        hoverBorder="2px solid #225380"
+                        >
+                        Iniciar sesión
+                    </Button>
+                </Section>
             </Form>
         </Formik>
     )

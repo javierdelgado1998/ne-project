@@ -2,15 +2,53 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import Button from "./Button";
 import Input from "./Input";
+import Section from "../Section";
+import {ImUser} from "react-icons/im";
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { BsCardImage } from "react-icons/bs";
+import Icon from "../../styles/icons/Icon";
+import { useRef } from "react";
 
-const RegisterForm = () => {
+const RegisterForm = ({closeModal}) => {
+    const ref = useRef();
+    const initialValues = {
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        img: ""
+    };
     const handleSubmit = async (values) => {
-        console.log(values);
+        const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(values),
+        });
+        if(response.ok && response.status === 200) {
+            const data = await response.json();
+            ref.current.textContent = "Registro exitoso..."
+            ref.current.style.color = "green";
+            console.log(data);
+        }
+        else {
+            console.log(response);
+            ref.current.textContent = "Se ha producido un problema con tu solicitud...";
+            ref.current.style.color = "red";
+            console.log(ref.current);
+        }
     }
     return (
         <Formik
-            initialValues={{ email: '', password: ''}} 
-            onSubmit={handleSubmit}
+            initialValues={initialValues} 
+            onSubmit={(values, {resetForm}) => {
+                    console.log(values);
+                    handleSubmit();
+                    resetForm();
+                }
+            }
             validationSchema={Yup.object({
                 firstname: Yup.string().min(3, "Mínimo 3 caracteres").max(20, "Máximo 20 caracteres").required('Obligatorio'),
                 lastname: Yup.string().min(3, "Mínimo 3 caracteres").max(20, "Máximo 20 caracteres").required('Obligatorio'),
@@ -20,12 +58,44 @@ const RegisterForm = () => {
             })}
         >
             <Form>
-                <Input name="firstname" type="text" label="Nombre" />
-                <Input name="lastname" type="text" label="Apellido" />
-                <Input name="email" label="Email" type="email" />
-                <Input name="password" type="password" label="Contraseña" />
-                <Input name="img" type="text" label="Imagen" />
-                <Button type="submit">Registrar</Button>
+                <Input name="firstname" type="text" label="Nombre" placeholder="Ingresa tu nombre...">
+                    <ImUser style={Icon} />
+                </Input>
+                <Input name="lastname" type="text" label="Apellido" placeholder="Ingresa tu apellido...">
+                    <ImUser style={Icon} />
+                </Input>
+                <Input name="email" label="Email" type="email" placeholder="Ingrese tu correo electrónico...">
+                    <MdEmail style={Icon} />
+                </Input>
+                <Input name="password" type="password" label="Contraseña" placeholder="Ingresa tu contraseña...">
+                    <RiLockPasswordFill style={Icon} />
+                </Input>
+                <Input name="img" type="text" label="Imagen" placeholder="Ingresa una imagen...">
+                    <BsCardImage style={Icon} />
+                </Input>
+                <Section display="flex" justifyContent="space-around" alignItems ="center" width="100%" boxShadow="none" padding="0">
+                    <Button 
+                    type="submit"
+                    fontSize="20px"
+                    color="#fff" 
+                    background="#00a400" 
+                    border="none"
+                    hoverBackground="linear-gradient(#79bc64, #578843)"
+                    >
+                        Registrar
+                    </Button>
+                    <Button 
+                    type="reset"
+                    fontSize="20px"
+                    color="#fff" 
+                    background="red" 
+                    border="none"
+                    hoverBackground="#472B2E"
+                    >
+                        Limpiar
+                    </Button>
+                </Section>
+                <p ref={ref}></p>
             </Form>
         </Formik>
     )

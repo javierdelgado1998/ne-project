@@ -19,7 +19,7 @@ const Start = () => {
         );
     }
     return (
-        <Container>
+        <Container direction="column">
           <Section>
             <LoginForm />
           </Section>

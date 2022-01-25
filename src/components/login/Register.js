@@ -2,14 +2,25 @@ import Button from "./Button";
 import useModal from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import RegisterForm from "./RegisterForm";
+import Section from "../Section";
 
 const Register = () => {
     const [isOpen, openModal, closeModal] = useModal();
     return (
         <>
-            <Button onClick={openModal}>Crear usuario</Button>
+            <Section display="flex" justifyContent="center" alignItems ="center" width="100%" boxShadow="none">
+                <Button onClick={openModal}
+                    fontSize="20px"
+                    color="#fff" 
+                    background="#00a400" 
+                    border="none"
+                    hoverBackground="linear-gradient(#79bc64, #578843)"
+                    >
+                    Crear cuenta
+                </Button>
+            </Section>
             <Modal isOpen={isOpen} closeModal={closeModal}>
-                <RegisterForm />
+                <RegisterForm closeModal={closeModal} />
             </Modal>
         </>
     )
