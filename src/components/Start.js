@@ -1,30 +1,34 @@
 import { useContext } from "react";
-import Container from "./Container";
-import Section from "./Section";
+import Container from "./general/Container";
+import Section from "./general/Section";
 import LoginForm from "./login/LoginForm";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import UserContext from "../context/user/UserContext";
-import Home from "./Home";
+import Home from "./pages/Home";
 import Register from "./login/Register";
-import SideBar from "./sidebar/Sidebar";
 import Header from "./header/Header";
+import Sidebar from "./sidebar/Sidebar";
+import { Provider } from "react-redux";
+import store from "..";
+import Pages from "./pages/Pages";
+
 const Start = () => {
     const {logged} = useContext(UserContext);
     if(logged) { 
         return (
-          <Container justifyContent="flex-start">
-            <SideBar />
-            <Container direction="column" width="100%">
+          <Provider store={store}>
+            <Container direction="column">
               <Header />
               <Container>
-                <BrowserRouter>
+                <Sidebar />
+                <Pages>
                   <Routes>
                     <Route path="/" element={<Home />} />
                   </Routes>
-                </BrowserRouter>
+                </Pages>
               </Container>
             </Container>
-          </Container>
+          </Provider>
         );
     }
     return (

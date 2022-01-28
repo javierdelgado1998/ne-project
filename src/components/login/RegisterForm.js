@@ -2,7 +2,7 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import Button from "./Button";
 import Input from "./Input";
-import Section from "../Section";
+import Section from "../general/Section";
 import {ImUser} from "react-icons/im";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -10,7 +10,7 @@ import { BsCardImage } from "react-icons/bs";
 import Icon from "../../styles/icons/Icon";
 import { useRef, useCallback } from "react";
 
-const RegisterForm = ({closeModal}) => {
+const RegisterForm = () => {
     const ref = useRef();
     const initialValues = {
         firstname: "",
@@ -20,6 +20,7 @@ const RegisterForm = ({closeModal}) => {
         img: ""
     };
     const handleSubmit = useCallback(async (values) => {
+        console.log(values);
         const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/register", {
             method: "POST",
             headers: {
@@ -44,8 +45,7 @@ const RegisterForm = ({closeModal}) => {
         <Formik
             initialValues={initialValues} 
             onSubmit={async (values, {resetForm}) => {
-                console.log(values);
-                handleSubmit().then(response => response && resetForm());
+                handleSubmit(values).then(response => response && resetForm());
             }}
             validationSchema={Yup.object({
                 firstname: Yup.string().min(3, "Mínimo 3 caracteres").max(20, "Máximo 20 caracteres").required('Obligatorio'),
@@ -93,7 +93,9 @@ const RegisterForm = ({closeModal}) => {
                         Limpiar
                     </Button>
                 </Section>
-                <p ref={ref}></p>
+                <Section display="flex" justifyContent="center" alignItems="center" width="100%" boxShadow="none" padding="0">
+                    <p ref={ref}></p>
+                </Section>
             </Form>
         </Formik>
     )

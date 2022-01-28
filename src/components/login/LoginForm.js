@@ -4,14 +4,18 @@ import Input from "./Input";
 import Button from "./Button";
 import { useContext } from "react/cjs/react.development";
 import UserContext from "../../context/user/UserContext";
-import Section from "../Section";
+import Section from "../general/Section";
 import {MdEmail} from "react-icons/md"
 import {RiLockPasswordFill} from "react-icons/ri";
 import Icon from "../../styles/icons/Icon";
+import { useRef } from "react";
 
 const LoginForm = () => {
+    const ref = useRef();
     const {login, setUser} = useContext(UserContext);
     const handleSubmit = async (values) => {
+        ref.current.textContent = "Iniciando sesión...";
+        ref.current.style.color = "black";
         const response = await fetch("https://pr0vius-presupuesto.herokuapp.com/api/v1/login", {
             method: "POST",
             headers: {
@@ -23,6 +27,10 @@ const LoginForm = () => {
             const data = await response.json();
             setUser(data.data);
             login();
+        }
+        else {
+            ref.current.textContent = "El correo electrónico que has introducido no está conectado a una cuenta o verifica que la contraseña ingresada es correcta.";
+            ref.current.style.color = "red";
         }
     };
 
@@ -55,6 +63,9 @@ const LoginForm = () => {
                         >
                         Iniciar sesión
                     </Button>
+                </Section>
+                <Section display="flex" justifyContent="center" alignItems="center" width="100%" boxShadow="none" padding="0">
+                    <p ref={ref}></p>
                 </Section>
             </Form>
         </Formik>

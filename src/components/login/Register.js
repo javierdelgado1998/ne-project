@@ -2,7 +2,7 @@ import Button from "./Button";
 import useModal from "../../hooks/useModal";
 import Modal from "../modal/Modal";
 import RegisterForm from "./RegisterForm";
-import Section from "../Section";
+import Section from "../general/Section";
 
 const Register = () => {
     const [isOpen, openModal, closeModal] = useModal();
@@ -20,7 +20,7 @@ const Register = () => {
                 </Button>
             </Section>
             <Modal isOpen={isOpen} closeModal={closeModal}>
-                <RegisterForm closeModal={closeModal} />
+                <RegisterForm />
             </Modal>
         </>
     )

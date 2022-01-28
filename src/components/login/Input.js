@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useField } from "formik";
-import Section from "../Section";
+import Section from "../general/Section";
 import { useEffect, useRef } from "react";
 import {RiAlertFill} from "react-icons/ri";
 import {BsFillCheckCircleFill} from "react-icons/bs";
