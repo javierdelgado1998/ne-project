@@ -28,7 +28,8 @@ const Li = styled.li`
     display: flex;
     justify-content: center;
     align-items: center;
-
+    transition: all 0.3s ease-in-out;
+    
     &:hover {
         color: #fff;
         background: #1d2531;

@@ -19,7 +19,7 @@ const Register = () => {
                     Crear cuenta
                 </Button>
             </Section>
-            <Modal isOpen={isOpen} closeModal={closeModal}>
+            <Modal isOpen={isOpen} closeModal={closeModal} title="Crear cuenta" height="90%">
                 <RegisterForm />
             </Modal>
         </>

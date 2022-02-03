@@ -11,6 +11,7 @@ import Sidebar from "./sidebar/Sidebar";
 import { Provider } from "react-redux";
 import store from "..";
 import Pages from "./pages/Pages";
+import ProfilePage from "./pages/ProfilePage";
 
 const Start = () => {
     const {logged} = useContext(UserContext);
@@ -24,6 +25,7 @@ const Start = () => {
                 <Pages>
                   <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                   </Routes>
                 </Pages>
               </Container>
